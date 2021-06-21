@@ -1,8 +1,16 @@
 {
   "dependencies": {
     "configstore": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "open": "^8.2.0",
+    "querystring": "^0.2.1",
     "request": "^2.88.2",
     "tmi.js": "^1.7.1",
     "websocket": "^1.0.33"
-  }
+  },
+  "nameCP": "gadgets",
+  "nameSP": "spotify"
 }

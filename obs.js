@@ -6,18 +6,20 @@ let socket
 let obs = new EventEmitter()
 
 client.on('connectFailed', function(error) {
-    console.log(`Connect Error: ${error.toString()}`)
+    console.log(`Connection to OBS failed: ${error.toString()}`)
+    setTimeout(obsConnect, 10*1000)
 });
 
 client.on('connect', (connection) => {
     socket = connection
-    console.log(`WebSocket Client Connected`)
+    console.log(`Connected to OBS`)
     connection.on('error', (error) => {
-        console.log(`Connection Error: ${error.toString()}`)
+        console.log(`Error Connecting to OBS: ${error.toString()}`)
     })
 
     connection.on('close', () => {
-        console.log(`Connection Closed`)
+        console.log(`Connection to OBS Closed`)
+        setTimeout(obsConnect, 10*1000)
     })
 
     connection.on('message', function(message) {
@@ -32,13 +34,6 @@ client.on('connect', (connection) => {
 
 })
 
-client.connect('ws://DESKTOP-TKAGNIC:4444/')
-
-/**
- * 
- * @param {String} request 
- * @param {Object} params 
- */
 obs.send = (request, params) => {
     const data = params ? params : {}
     data['request-type'] = request
@@ -46,5 +41,10 @@ obs.send = (request, params) => {
     socket.send(JSON.stringify(data))
 }
 
+function obsConnect() {
+    client.connect('ws://DESKTOP-TKAGNIC:4444/')
+}
+
+obsConnect()
 
 module.exports = obs
